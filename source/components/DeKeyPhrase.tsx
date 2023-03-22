@@ -9,11 +9,12 @@ export const DeKeyPhrase: FC<{
 	const [inputString, setInputString] = useState<string>("");
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
 	const [keyString, setKeyString] = useState<string>("");
+
 	const validateCipherConditions = (str: string, key: string): boolean => {
 		const globalValidations = [
 			(str: string, key: string) => str && key,
 			(str: string, key: string) =>
-				/^[A-Za-z]*$/.test(key) && /^[A-Za-z]*$/.test(str),
+				/^[A-Za-z]*$/.test(key) && /^[A-Z a-z]*$/.test(str),
 		];
 		for (const validator of globalValidations) {
 			if (!validator(str, key)) return false;

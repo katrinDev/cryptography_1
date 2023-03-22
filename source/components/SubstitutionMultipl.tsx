@@ -3,17 +3,27 @@ import TextInput from "ink-text-input";
 import { Box, Text } from "ink";
 import { alphabetArr } from "../alfa";
 
-export const SubstMultiplic: FC<{
+export const SubstitutionMultiplic: FC<{
+	setEncryptedItem: (a: string) => void;
+	setSelectedItem: (a: string) => void;
 	//encryption or decryption
 	encryption: boolean;
-}> = ({ encryption }) => {
+}> = ({ encryption, setEncryptedItem, setSelectedItem }) => {
 	const [inputString, setInputString] = useState<string>("");
-
-	const [encryptedString, setEncryptedString] = useState<string>("");
 
 	const inputArr = inputString.split("");
 
+	const validateCipher = (str: string): boolean => {
+		return str && /^[а-яa-z]*$/.test(str);
+	};
+
 	const handleEncrypt = (): void => {
+		if (!validateCipher(inputString)) {
+			setEncryptedItem("");
+			setSelectedItem("");
+			return;
+		}
+
 		function NOD(x: number, y: number) {
 			while (x && y) {
 				x > y ? (x = x %= y) : (y = y %= x);
@@ -70,18 +80,9 @@ export const SubstMultiplic: FC<{
 
 		const ourKey = encryption ? encryptKey : decryptKey;
 
-		setEncryptedString(encryptFunction(inputArr, ourKey, ourAlphabet));
+		setEncryptedItem(encryptFunction(inputArr, ourKey, ourAlphabet));
+		setSelectedItem("");
 	};
-
-	if (encryptedString) {
-		return (
-			<Box>
-				<Box marginRight={1}>
-					<Text>Encrypted String: {encryptedString}</Text>
-				</Box>
-			</Box>
-		);
-	}
 
 	return (
 		<Box>

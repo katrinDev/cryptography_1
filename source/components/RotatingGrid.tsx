@@ -74,7 +74,7 @@ export const RotatingGrid: FC<{
 	}
 
 	const getAllIndex = (iterable: string, val: string): number => {
-		let indexes: number[] = [];
+		const indexes: number[] = [];
 		for (let i = 0; i < iterable.length; i++)
 			if (iterable[i] === val) indexes.push(i);
 		return indexes[0] as number;
@@ -109,7 +109,7 @@ export const RotatingGrid: FC<{
 		let decodedStr = "";
 		for (let i = 0; i < CIPER_ROW_LENGTH; i++) {
 			for (let j = 0; j < CIPHER_COL_LENGTH; j++) {
-				let index = getAllIndex(patternM[j], "X");
+				const index = getAllIndex(patternM[j], "X");
 
 				decodedStr += pwM[j][index];
 			}
@@ -154,7 +154,7 @@ export const RotatingGrid: FC<{
 		];
 		for (let i = 0; i < CIPER_ROW_LENGTH; i++) {
 			for (let j = 0; j < CIPHER_COL_LENGTH; j++) {
-				let index = getAllIndex(patternM[j] as string, "X");
+				const index = getAllIndex(patternM[j] as string, "X");
 
 				newMatrix[j][index] = pwM[i][j];
 			}

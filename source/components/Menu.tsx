@@ -40,6 +40,14 @@ export const Menu: FC<{ handleSelectMenuItem: (a: string) => void }> = ({
 			label: "Rotating Grid Decrypt",
 			value: "Rotating Grid Decrypt",
 		},
+		{
+			label: "Substitution Multiplication Encrypt",
+			value: "Substitution Multiplication Encrypt",
+		},
+		{
+			label: "Substitution Multiplication Decrypt",
+			value: "Substitution Multiplication Decrypt",
+		},
 	];
 
 	return <SelectInput items={menuItems} onSelect={handleSelect} />;

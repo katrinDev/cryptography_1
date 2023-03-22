@@ -14,7 +14,7 @@ export const KeyPhrase: FC<{
 		const globalValidations = [
 			(str: string, key: string) => str && key,
 			(str: string, key: string) =>
-				/^[A-Za-z]*$/.test(key) && /^[A-Za-z]*$/.test(str),
+				/^[A-Za-z]*$/.test(key) && /^[A-Z a-z]*$/.test(str),
 		];
 		for (const validator of globalValidations) {
 			if (!validator(str, key)) return false;

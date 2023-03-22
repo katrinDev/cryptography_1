@@ -7,6 +7,7 @@ import { ZigZag } from "./ZigZag";
 import { Caezar } from "./Caezar";
 import { DeKeyPhrase } from "./DeKeyPhrase";
 import { RotatingGrid } from "./RotatingGrid";
+import { SubstitutionMultiplic } from "./SubstitutionMultipl";
 
 export const App = () => {
 	const [selectedItem, setSelectedItem] = useState<string>();
@@ -71,6 +72,24 @@ export const App = () => {
 					setEncryptedItem={setEncryptedItem}
 					setSelectedItem={setSelectedItem}
 					encryption={false}
+				/>
+			);
+
+		case "Substitution Multiplication Encrypt":
+			return (
+				<SubstitutionMultiplic
+					setEncryptedItem={setEncryptedItem}
+					setSelectedItem={setSelectedItem}
+					encryption={true}
+				/>
+			);
+
+		case "Substitution Multiplication Decrypt":
+			return (
+				<SubstitutionMultiplic
+					setEncryptedItem={setEncryptedItem}
+					setSelectedItem={setSelectedItem}
+					encryption={true}
 				/>
 			);
 

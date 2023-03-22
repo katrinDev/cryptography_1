@@ -14,15 +14,11 @@ export const Caezar: FC<{
 	const [keyString, setKeyString] = useState<string>("");
 
 	const validateCipherConditions = (str: string, key: string): boolean => {
-		const globalValidations = [
-			(str: string, key: string) => str && key,
-			(str: string, key: string) =>
-				!isNaN(Number(key)) && /^[0-32]+$/.test(key) && str,
-		];
-		for (const validator of globalValidations) {
-			if (!validator(str, key)) return false;
+		if (!isNaN(Number(key)) && /^[0-32]+$/.test(key) && str && key) {
+			return true;
+		} else {
+			return true;
 		}
-		return true;
 	};
 
 	const handleEncrypt = (): void => {
