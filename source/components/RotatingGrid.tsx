@@ -85,14 +85,16 @@ export const RotatingGrid: FC<{
 
 		for (const arr of [patternM, pwM]) {
 			if (!validateCipherConditions(arr)) {
-				setEncryptedItem("");
+				setEncryptedItem("String length should equals 16");
 				setSelectedItem("");
+				return;
 			}
 		}
 		for (const string of pwM) {
 			if (string.toLowerCase() !== string) {
 				setEncryptedItem("");
 				setSelectedItem("");
+				return;
 			}
 		}
 		for (const string of patternM) {
@@ -100,6 +102,7 @@ export const RotatingGrid: FC<{
 				if (ch !== "X" && ch !== ".") {
 					setEncryptedItem("");
 					setSelectedItem("");
+					return;
 				}
 			}
 		}
@@ -122,14 +125,16 @@ export const RotatingGrid: FC<{
 
 		for (const arr of [patternM, pwM]) {
 			if (!validateCipherConditions(arr)) {
-				setEncryptedItem("");
+				setEncryptedItem("String length should equals 16");
 				setSelectedItem("");
+				return;
 			}
 		}
 		for (const string of pwM) {
 			if (string.toLowerCase() !== string) {
 				setEncryptedItem("");
 				setSelectedItem("");
+				return;
 			}
 		}
 		for (const string of patternM) {
@@ -137,6 +142,7 @@ export const RotatingGrid: FC<{
 				if (ch !== "X" && ch !== ".") {
 					setEncryptedItem("");
 					setSelectedItem("");
+					return;
 				}
 			}
 		}

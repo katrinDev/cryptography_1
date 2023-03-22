@@ -10,11 +10,28 @@ export const DeZigZag: FC<{
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
 	const [keyString, setKeyString] = useState<string>("");
 
+	const validateCipherConditions = (str: string, key: string): boolean => {
+		const globalValidations = [
+			(str: string, key: string) => str && key,
+			(str: string, key: string) => !isNaN(Number(key)) && str,
+		];
+		for (const validator of globalValidations) {
+			if (!validator(str, key)) return false;
+		}
+		return true;
+	};
+
 	const handleEncrypt = (): void => {
+		if (!validateCipherConditions(inputString, keyString)) {
+			setEncryptedItem("");
+			setSelectedItem("");
+			return;
+		}
+
 		const k = Number(keyString);
 		if (k === 1) {
-		setEncryptedItem("");
-		setSelectedItem("");
+			setEncryptedItem("");
+			setSelectedItem("");
 		}
 
 		let currentRow = 0;

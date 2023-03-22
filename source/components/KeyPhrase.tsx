@@ -10,7 +10,25 @@ export const KeyPhrase: FC<{
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
 	const [keyString, setKeyString] = useState<string>("");
 
+	const validateCipherConditions = (str: string, key: string): boolean => {
+		const globalValidations = [
+			(str: string, key: string) => str && key,
+			(str: string, key: string) =>
+				/^[A-Za-z]*$/.test(key) && /^[A-Za-z]*$/.test(str),
+		];
+		for (const validator of globalValidations) {
+			if (!validator(str, key)) return false;
+		}
+		return true;
+	};
+
 	const handleEncrypt = (): void => {
+		if (!validateCipherConditions(inputString, keyString)) {
+			setEncryptedItem("");
+			setSelectedItem("");
+			return;
+		}
+
 		const sortedArray = keyString.split("").sort();
 		const keyArray = keyString.split("");
 
@@ -67,7 +85,6 @@ export const KeyPhrase: FC<{
 		setSelectedItem("");
 	};
 
-
 	if (isTextSubmited) {
 		return (
 			<Box>
@@ -76,9 +93,7 @@ export const KeyPhrase: FC<{
 				</Box>
 				<TextInput
 					value={keyString}
-					onChange={(str: string) =>
-						/^[A-Za-z]*$/.test(str) ? setKeyString(str) : ""
-					}
+					onChange={(str: string) => setKeyString(str)}
 					onSubmit={handleEncrypt}
 				/>
 			</Box>
@@ -93,9 +108,7 @@ export const KeyPhrase: FC<{
 				</Box>
 				<TextInput
 					value={inputString}
-					onChange={(str: string) =>
-						/^[A-Z a-z]*$/.test(str) ? setInputString(str) : ""
-					}
+					onChange={(str: string) => setInputString(str)}
 					onSubmit={() => setTextSubmited(true)}
 				/>
 			</>
