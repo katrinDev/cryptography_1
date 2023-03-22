@@ -64,7 +64,7 @@ export const Caezar: FC<{
 				<TextInput
 					value={key.toString()}
 					onChange={(str: string) =>
-						/^[0-32]+$/.test(str) ? setKey(+str) : null
+						/^[0-32]+$/.test(str) ? setKey(+str) : ""
 					}
 					onSubmit={handleEncrypt}
 				/>

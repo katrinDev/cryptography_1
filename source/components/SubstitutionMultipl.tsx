@@ -21,7 +21,7 @@ export const SubstMultiplic: FC<{
 			return x + y;
 		}
 
-		function keysGenerator(maxNumber: number) {
+		function keysGenerator(maxNumber: number): [number, number] {
 			let a = 1;
 			let b = 3;
 			do {
@@ -35,7 +35,7 @@ export const SubstMultiplic: FC<{
 				}
 			} while (a <= maxNumber);
 
-			return null;
+			return [a, b];
 		}
 
 		const encryptFunction = (

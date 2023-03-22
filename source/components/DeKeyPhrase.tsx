@@ -114,7 +114,7 @@ export const DeKeyPhrase = () => {
 				<TextInput
 					value={keyString}
 					onChange={(str: string) =>
-						/^[A-Za-z]*$/.test(str) ? setKeyString(str) : null
+						/^[A-Za-z]*$/.test(str) ? setKeyString(str) : ""
 					}
 					onSubmit={handleEncrypt}
 				/>
@@ -131,7 +131,7 @@ export const DeKeyPhrase = () => {
 				<TextInput
 					value={inputString}
 					onChange={(str: string) =>
-						/^[A-Z a-z]*$/.test(str) ? setInputString(str) : null
+						/^[A-Z a-z]*$/.test(str) ? setInputString(str) : ""
 					}
 					onSubmit={() => setTextSubmited(true)}
 				/>

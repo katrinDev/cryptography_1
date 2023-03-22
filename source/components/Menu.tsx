@@ -20,18 +20,25 @@ export const Menu: FC<{ handleSelectMenuItem: (a: string) => void }> = ({
 			label: "Key phrase encryptor",
 			value: "key phrase",
 		},
-
 		{
 			label: "Key phrase decryptor",
 			value: "decrypt key phrase",
 		},
 		{
 			label: "Caezar cipher encryptor",
-			value: "caezar",
+			value: "caezar encrypt",
 		},
 		{
 			label: "Caezar cipher decryptor",
-			value: "decrypt caezar",
+			value: "caezar decrypt",
+		},
+		{
+			label: "Rotating Grid Encrypt",
+			value: "Rotating Grid Encrypt",
+		},
+		{
+			label: "Rotating Grid Decrypt",
+			value: "Rotating Grid Decrypt",
 		},
 	];
 

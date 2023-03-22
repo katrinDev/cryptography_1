@@ -6,6 +6,7 @@ export const KeyPhrase = () => {
 	const [inputString, setInputString] = useState<string>("");
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
 	const [encryptedString, setEncryptedString] = useState<string>("");
+	const [isEncrypted, setIsEncrypted] = useState<boolean>(false);
 	const [keyString, setKeyString] = useState<string>("");
 
 	const handleEncrypt = (): void => {
@@ -48,7 +49,7 @@ export const KeyPhrase = () => {
 			}
 		}
 
-		console.log(matrix);
+		// console.log(matrix);
 
 		const resultArray = [];
 
@@ -61,11 +62,12 @@ export const KeyPhrase = () => {
 			}
 		}
 
-		console.log(resultArray);
+		// console.log(resultArray);
 		setEncryptedString(resultArray.join(""));
+		setIsEncrypted(true);
 	};
 
-	if (encryptedString) {
+	if (encryptedString || isEncrypted) {
 		return (
 			<Box>
 				<Box marginRight={1}>
@@ -84,7 +86,7 @@ export const KeyPhrase = () => {
 				<TextInput
 					value={keyString}
 					onChange={(str: string) =>
-						/^[A-Za-z]*$/.test(str) ? setKeyString(str) : null
+						/^[A-Za-z]*$/.test(str) ? setKeyString(str) : ""
 					}
 					onSubmit={handleEncrypt}
 				/>
@@ -101,7 +103,7 @@ export const KeyPhrase = () => {
 				<TextInput
 					value={inputString}
 					onChange={(str: string) =>
-						/^[A-Z a-z]*$/.test(str) ? setInputString(str) : null
+						/^[A-Z a-z]*$/.test(str) ? setInputString(str) : ""
 					}
 					onSubmit={() => setTextSubmited(true)}
 				/>
