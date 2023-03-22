@@ -1,14 +1,34 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import TextInput from "ink-text-input";
 import { Box, Text } from "ink";
 
-export const KeyPhrase = () => {
+export const KeyPhrase: FC<{
+	setEncryptedItem: (a: string) => void;
+	setSelectedItem: (a: string) => void;
+}> = ({ setSelectedItem, setEncryptedItem }) => {
 	const [inputString, setInputString] = useState<string>("");
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
-	const [encryptedString, setEncryptedString] = useState<string>("");
 	const [keyString, setKeyString] = useState<string>("");
 
+	const validateCipherConditions = (str: string, key: string): boolean => {
+		const globalValidations = [
+			(str: string, key: string) => str && key,
+			(str: string, key: string) =>
+				/^[A-Za-z]*$/.test(key) && /^[A-Za-z]*$/.test(str),
+		];
+		for (const validator of globalValidations) {
+			if (!validator(str, key)) return false;
+		}
+		return true;
+	};
+
 	const handleEncrypt = (): void => {
+		if (!validateCipherConditions(inputString, keyString)) {
+			setEncryptedItem("");
+			setSelectedItem("");
+			return;
+		}
+
 		const sortedArray = keyString.split("").sort();
 		const keyArray = keyString.split("");
 
@@ -48,7 +68,7 @@ export const KeyPhrase = () => {
 			}
 		}
 
-		console.log(matrix);
+		// console.log(matrix);
 
 		const resultArray = [];
 
@@ -61,19 +81,9 @@ export const KeyPhrase = () => {
 			}
 		}
 
-		console.log(resultArray);
-		setEncryptedString(resultArray.join(""));
+		setEncryptedItem(resultArray.join(""));
+		setSelectedItem("");
 	};
-
-	if (encryptedString) {
-		return (
-			<Box>
-				<Box marginRight={1}>
-					<Text>Encrypted String: {encryptedString}</Text>
-				</Box>
-			</Box>
-		);
-	}
 
 	if (isTextSubmited) {
 		return (
@@ -83,9 +93,7 @@ export const KeyPhrase = () => {
 				</Box>
 				<TextInput
 					value={keyString}
-					onChange={(str: string) =>
-						/^[A-Za-z]*$/.test(str) ? setKeyString(str) : null
-					}
+					onChange={(str: string) => setKeyString(str)}
 					onSubmit={handleEncrypt}
 				/>
 			</Box>
@@ -100,9 +108,7 @@ export const KeyPhrase = () => {
 				</Box>
 				<TextInput
 					value={inputString}
-					onChange={(str: string) =>
-						/^[A-Z a-z]*$/.test(str) ? setInputString(str) : null
-					}
+					onChange={(str: string) => setInputString(str)}
 					onSubmit={() => setTextSubmited(true)}
 				/>
 			</>

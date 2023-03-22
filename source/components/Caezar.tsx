@@ -4,16 +4,34 @@ import { Box, Text } from "ink";
 import { bigArr } from "../alfa";
 
 export const Caezar: FC<{
-	//encryption or decryption
+	setEncryptedItem: (a: string) => void;
+	setSelectedItem: (a: string) => void;
 	encryption: boolean;
-}> = ({ encryption }) => {
+}> = ({ encryption, setEncryptedItem, setSelectedItem }) => {
 	const [inputString, setInputString] = useState<string>("");
 
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
-	const [encryptedString, setEncryptedString] = useState<string>("");
-	const [key, setKey] = useState<number>(0);
+	const [keyString, setKeyString] = useState<string>("");
+
+	const validateCipherConditions = (str: string, key: string): boolean => {
+		const globalValidations = [
+			(str: string, key: string) => str && key,
+			(str: string, key: string) =>
+				!isNaN(Number(key)) && /^[0-32]+$/.test(key) && str,
+		];
+		for (const validator of globalValidations) {
+			if (!validator(str, key)) return false;
+		}
+		return true;
+	};
 
 	const handleEncrypt = (): void => {
+		if (!validateCipherConditions(inputString, keyString)) {
+			setEncryptedItem("");
+			setSelectedItem("");
+			return;
+		}
+		const key = Number(keyString);
 		const encryptFunction = (inputString: string, key: number) => {
 			const inputArr = inputString.split("");
 
@@ -42,18 +60,9 @@ export const Caezar: FC<{
 			return resultArr.join("");
 		};
 
-		setEncryptedString(encryptFunction(inputString, key));
+		setEncryptedItem(encryptFunction(inputString, key));
+		setSelectedItem("");
 	};
-
-	if (encryptedString) {
-		return (
-			<Box>
-				<Box marginRight={1}>
-					<Text>Encrypted String: {encryptedString}</Text>
-				</Box>
-			</Box>
-		);
-	}
 
 	if (isTextSubmited) {
 		return (
@@ -62,10 +71,8 @@ export const Caezar: FC<{
 					<Text>Enter key:</Text>
 				</Box>
 				<TextInput
-					value={key.toString()}
-					onChange={(str: string) =>
-						/^[0-32]+$/.test(str) ? setKey(+str) : null
-					}
+					value={keyString}
+					onChange={(str: string) => setKeyString(str)}
 					onSubmit={handleEncrypt}
 				/>
 			</Box>
