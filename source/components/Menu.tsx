@@ -9,28 +9,28 @@ export const Menu: FC<{ handleSelectMenuItem: (a: string) => void }> = ({
 	};
 	const menuItems = [
 		{
-			label: "Zigzag encryptor",
-			value: "zigzag",
+			label: "Zigzag Encrypt",
+			value: "Zigzag Encrypt",
 		},
 		{
-			label: "Zigzag decryptor",
-			value: "decrypt zigzag",
+			label: "Zigzag Decrypt",
+			value: "Zigzag Decrypt",
 		},
 		{
-			label: "Key phrase encryptor",
-			value: "key phrase",
+			label: "Key Phrase Encrypt",
+			value: "Key Phrase Encrypt",
 		},
 		{
-			label: "Key phrase decryptor",
-			value: "decrypt key phrase",
+			label: "Key Phrase Decrypt",
+			value: "Key Phrase Decrypt",
 		},
 		{
-			label: "Caezar cipher encryptor",
-			value: "caezar encrypt",
+			label: "Caesar Encrypt",
+			value: "Caesar Encrypt",
 		},
 		{
-			label: "Caezar cipher decryptor",
-			value: "caezar decrypt",
+			label: "Caesar Decrypt",
+			value: "Caesar Decrypt",
 		},
 		{
 			label: "Rotating Grid Encrypt",

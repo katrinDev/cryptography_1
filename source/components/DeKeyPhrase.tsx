@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import TextInput from "ink-text-input";
 import { Box, Text } from "ink";
 
-export const DeKeyPhrase = () => {
+export const DeKeyPhrase: FC<{
+	setEncryptedItem: (a: string) => void;
+	setSelectedItem: (a: string) => void;
+}> = ({ setSelectedItem, setEncryptedItem }) => {
 	const [inputString, setInputString] = useState<string>("");
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
-	const [decryptedString, setDecryptedString] = useState<string>("");
 	const [keyString, setKeyString] = useState<string>("");
 	const handleEncrypt = (): void => {
 		const sortedArray = keyString.split("").sort();
@@ -92,18 +94,9 @@ export const DeKeyPhrase = () => {
 			}
 		}
 
-		setDecryptedString(resultArray.join(""));
+		setEncryptedItem(resultArray.join(""));
+		setSelectedItem("");
 	};
-
-	if (decryptedString) {
-		return (
-			<Box>
-				<Box marginRight={1}>
-					<Text>Decrypted String: {decryptedString}</Text>
-				</Box>
-			</Box>
-		);
-	}
 
 	if (isTextSubmited) {
 		return (

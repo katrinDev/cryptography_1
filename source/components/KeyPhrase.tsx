@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import TextInput from "ink-text-input";
 import { Box, Text } from "ink";
 
-export const KeyPhrase = () => {
+export const KeyPhrase: FC<{
+	setEncryptedItem: (a: string) => void;
+	setSelectedItem: (a: string) => void;
+}> = ({ setSelectedItem, setEncryptedItem }) => {
 	const [inputString, setInputString] = useState<string>("");
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
-	const [encryptedString, setEncryptedString] = useState<string>("");
-	const [isEncrypted, setIsEncrypted] = useState<boolean>(false);
 	const [keyString, setKeyString] = useState<string>("");
 
 	const handleEncrypt = (): void => {
@@ -62,20 +63,10 @@ export const KeyPhrase = () => {
 			}
 		}
 
-		// console.log(resultArray);
-		setEncryptedString(resultArray.join(""));
-		setIsEncrypted(true);
+		setEncryptedItem(resultArray.join(""));
+		setSelectedItem("");
 	};
 
-	if (encryptedString || isEncrypted) {
-		return (
-			<Box>
-				<Box marginRight={1}>
-					<Text>Encrypted String: {encryptedString}</Text>
-				</Box>
-			</Box>
-		);
-	}
 
 	if (isTextSubmited) {
 		return (

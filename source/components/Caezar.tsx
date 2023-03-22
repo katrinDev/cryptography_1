@@ -4,13 +4,13 @@ import { Box, Text } from "ink";
 import { bigArr } from "../alfa";
 
 export const Caezar: FC<{
-	//encryption or decryption
+	setEncryptedItem: (a: string) => void;
+	setSelectedItem: (a: string) => void;
 	encryption: boolean;
-}> = ({ encryption }) => {
+}> = ({ encryption, setEncryptedItem, setSelectedItem }) => {
 	const [inputString, setInputString] = useState<string>("");
 
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
-	const [encryptedString, setEncryptedString] = useState<string>("");
 	const [key, setKey] = useState<number>(0);
 
 	const handleEncrypt = (): void => {
@@ -42,18 +42,9 @@ export const Caezar: FC<{
 			return resultArr.join("");
 		};
 
-		setEncryptedString(encryptFunction(inputString, key));
+		setEncryptedItem(encryptFunction(inputString, key));
+		setSelectedItem("");
 	};
-
-	if (encryptedString) {
-		return (
-			<Box>
-				<Box marginRight={1}>
-					<Text>Encrypted String: {encryptedString}</Text>
-				</Box>
-			</Box>
-		);
-	}
 
 	if (isTextSubmited) {
 		return (

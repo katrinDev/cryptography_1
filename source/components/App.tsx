@@ -13,23 +13,50 @@ export const App = () => {
 	const [encryptedItem, setEncryptedItem] = useState<string>();
 
 	switch (selectedItem) {
-		case "zigzag":
+		case "Zigzag Encrypt":
 			return (
 				<ZigZag
 					setEncryptedItem={setEncryptedItem}
 					setSelectedItem={setSelectedItem}
 				/>
 			);
-		case "dezigzag":
-			return <DeZigZag />;
-		case "key phrase":
-			return <KeyPhrase />;
-		case "decrypt key phrase":
-			return <DeKeyPhrase />;
-		case "caesar encrypt":
-			return <Caezar encryption={true} />;
-		case "caesar decrypt":
-			return <Caezar encryption={false} />;
+		case "Zigzag Decrypt":
+			return (
+				<DeZigZag
+					setEncryptedItem={setEncryptedItem}
+					setSelectedItem={setSelectedItem}
+				/>
+			);
+		case "Key Phrase Encrypt":
+			return (
+				<KeyPhrase
+					setEncryptedItem={setEncryptedItem}
+					setSelectedItem={setSelectedItem}
+				/>
+			);
+		case "Key Phrase Decrypt":
+			return (
+				<DeKeyPhrase
+					setEncryptedItem={setEncryptedItem}
+					setSelectedItem={setSelectedItem}
+				/>
+			);
+		case "Caesar Encrypt":
+			return (
+				<Caezar
+					encryption={true}
+					setEncryptedItem={setEncryptedItem}
+					setSelectedItem={setSelectedItem}
+				/>
+			);
+		case "Caesar Decrypt":
+			return (
+				<Caezar
+					encryption={false}
+					setEncryptedItem={setEncryptedItem}
+					setSelectedItem={setSelectedItem}
+				/>
+			);
 		case "Rotating Grid Encrypt":
 			return (
 				<RotatingGrid

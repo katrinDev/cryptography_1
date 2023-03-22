@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import TextInput from "ink-text-input";
 import { Box, Text } from "ink";
 
-export const DeZigZag = () => {
+export const DeZigZag: FC<{
+	setEncryptedItem: (a: string) => void;
+	setSelectedItem: (a: string) => void;
+}> = ({ setEncryptedItem, setSelectedItem }) => {
 	const [inputString, setInputString] = useState<string>("");
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
-	const [decryptedString, setDecryptedString] = useState<string>("");
 	const [keyString, setKeyString] = useState<string>("");
 
 	const handleEncrypt = (): void => {
 		const k = Number(keyString);
 		if (k === 1) {
-			setDecryptedString(inputString);
+		setEncryptedItem("");
+		setSelectedItem("");
 		}
 
 		let currentRow = 0;
@@ -75,18 +78,9 @@ export const DeZigZag = () => {
 			({ headingDown, currentRow } = path(k, headingDown, currentRow));
 		}
 		// Initialise a return string
-		setDecryptedString(resultArr.join(""));
+		setEncryptedItem(resultArr.join(""));
+		setSelectedItem("");
 	};
-
-	if (decryptedString) {
-		return (
-			<Box>
-				<Box marginRight={1}>
-					<Text>Decrypted String: {decryptedString}</Text>
-				</Box>
-			</Box>
-		);
-	}
 
 	if (isTextSubmited) {
 		return (
