@@ -23,12 +23,9 @@ export const ElGamal: FC<{
 		exponent: number,
 		modulus: number
 	): number {
-		// Если модуль равен 1, возвращаем 0
 		if (modulus === 1) return 0;
 		let result = 1;
-		// Вычисляем остаток от деления основания на модуль
 		base = base % modulus;
-		// Пока показатель больше 0
 		while (exponent > 0) {
 			// Если показатель нечетный, умножаем результат на основание и берем остаток от деления на модуль
 			if (exponent % 2 === 1) result = (result * base) % modulus;
@@ -76,54 +73,50 @@ export const ElGamal: FC<{
 		privateKey: { x: number };
 	}
 
-	// Функция генерации пары ключей ElGamal
+	// генерация пары ключей ElGamal
 	function generateElGamalKeyPair(p: number): ElGamalKeyPair {
-		// Находим первообразный корень по модулю p
+		// первообразный корень по модулю p
 		const g = primitiveRoot(p);
-		// Генерируем случайное число x в диапазоне от 1 до p-2
+		// случайное число x в диапазоне от 1 до p-2
 		const x = Math.floor(Math.random() * (p - 2)) + 1;
-		// Вычисляем y как g^x mod p
+		// y = g^x mod p
 		const y = fastModularExponentiation(g, x, p);
 		// Возвращаем пару ключей
 		return { publicKey: { p, g, y }, privateKey: { x } };
 	}
 
-	// Интерфейс для шифротекста ElGamal
 	interface ElGamalCipherText {
-		c1: number;
-		c2: number;
+	  a: number;
+		b: number;
 	}
 
-	// Функция шифрования ElGamal
 	function elGamalEncrypt(
 		plainText: number,
 		publicKey: { p: number; g: number; y: number }
 	): ElGamalCipherText {
-		// Генерируем случайное число k в диапазоне от 1 до p-2
 		const k = Math.floor(Math.random() * (publicKey.p - 2)) + 1;
-		// Вычисляем c1 как g^k mod p
-		const c1 = fastModularExponentiation(publicKey.g, k, publicKey.p);
-		// Вычисляем s как y^k mod p
+		//  a = g^k mod p
+		const a = fastModularExponentiation(publicKey.g, k, publicKey.p);
+		//  s = y^k mod p
 		const s = fastModularExponentiation(publicKey.y, k, publicKey.p);
-		// Вычисляем c2 как (plainText * s) mod p
-		const c2 = (plainText * s) % publicKey.p;
+		//  b = (plainText * s) mod p
+		const b = (plainText * s) % publicKey.p;
 		// Возвращаем шифротекст
-		return { c1, c2 };
+		return { a, b };
 	}
 
-	// Функция расшифровки ElGamal
 	function elGamalDecrypt(
 		cipherText: ElGamalCipherText,
 		privateKey: { x: number },
 		p: number
 	): number {
-		// Вычисляем s как c1^x mod p
-		const s = fastModularExponentiation(cipherText.c1, privateKey.x, p);
-		// Вычисляем обратный элемент для s по модулю p
+		// s = a^x mod p
+		const s = fastModularExponentiation(cipherText.a, privateKey.x, p);
+		// обратный элемент для s по модулю p
 		const invS = fastModularExponentiation(s, p - 2, p);
-		// Вычисляем исходный текст как (c2 * invS) mod p
-		const plainText = (cipherText.c2 * invS) % p;
-		// Возвращаем исходный текст
+		// Вычисляем исходный текст как (b * invS) mod p
+		const plainText = (cipherText.b * invS) % p;
+
 		return plainText;
 	}
 
@@ -140,10 +133,9 @@ export const ElGamal: FC<{
 			console.log(`Plain text: ${plainText}`);
 
 			const cipherText = elGamalEncrypt(plainText, keyPair.publicKey);
-			console.log(`Cipher text: c1=${cipherText.c1}, c2=${cipherText.c2}`);
+			console.log(`Cipher text: a=${cipherText.a}, b=${cipherText.b}`);
 
 			const decryptedText = elGamalDecrypt(cipherText, keyPair.privateKey, p);
-			// console.log(`Decrypted text: ${decryptedText}`);
 			setSelectedItem("");
 			setEncryptedItem(String(decryptedText));
 		}
