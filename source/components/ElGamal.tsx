@@ -77,8 +77,8 @@ export const ElGamal: FC<{
 	function generateElGamalKeyPair(p: number): ElGamalKeyPair {
 		// первообразный корень по модулю p
 		const g = primitiveRoot(p);
-		// случайное число x в диапазоне от 1 до p-2
-		const x = Math.floor(Math.random() * (p - 2)) + 1;
+		// случайное число x в диапазоне от 1 до p-1
+		const x = Math.floor(Math.random() * (p - 1)) + 1;
 		// y = g^x mod p
 		const y = fastModularExponentiation(g, x, p);
 		// Возвращаем пару ключей
@@ -94,7 +94,7 @@ export const ElGamal: FC<{
 		plainText: number,
 		publicKey: { p: number; g: number; y: number }
 	): ElGamalCipherText {
-		const k = Math.floor(Math.random() * (publicKey.p - 2)) + 1;
+		const k = Math.floor(Math.random() * (publicKey.p - 1)) + 1;
 		//  a = g^k mod p
 		const a = fastModularExponentiation(publicKey.g, k, publicKey.p);
 		//  s = y^k mod p
