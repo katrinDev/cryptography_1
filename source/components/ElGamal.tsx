@@ -17,7 +17,7 @@ export const ElGamal: FC<{
 		}
 		return true;
 	};
-	// Функция быстрого возведения в степень по модулю
+
 	function fastModularExponentiation(
 		base: number,
 		exponent: number,
@@ -37,7 +37,6 @@ export const ElGamal: FC<{
 		return result;
 	}
 
-	// Функция нахождения первообразного корня по модулю
 	function primitiveRoot(p: number): number {
 		// Вычисляем значение функции Эйлера для p
 		let phi = p - 1;
@@ -67,7 +66,6 @@ export const ElGamal: FC<{
 		return -1;
 	}
 
-	// Интерфейс для пары ключей ElGamal
 	interface ElGamalKeyPair {
 		publicKey: { p: number; g: number; y: number };
 		privateKey: { x: number };
