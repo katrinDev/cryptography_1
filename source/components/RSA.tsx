@@ -1,13 +1,11 @@
 import React, { FC, useEffect } from "react";
 import { Box } from "ink";
 import { readFile } from "fs/promises";
-// import { readFile } from "fs/promises";
 
 export const RSA: FC<{
 	setEncryptedItem: (a: string) => void;
 	setSelectedItem: (a: string) => void;
 }> = ({ setSelectedItem, setEncryptedItem }) => {
-	// Функция хеширования JOAAT
 	function joaatHash(str: string): number {
 		let hash = 0;
 		for (let i = 0; i < str.length; i++) {
@@ -21,7 +19,6 @@ export const RSA: FC<{
 		return hash >>> 0;
 	}
 
-	// Функция возведения в степень по модулю
 	function modPow(base: bigint, exponent: bigint, modulus: bigint): bigint {
 		if (modulus === BigInt(1)) return BigInt(0);
 		let result = BigInt(1);
@@ -35,7 +32,6 @@ export const RSA: FC<{
 		return result;
 	}
 
-	// Функция генерации пары ключей
 	function generateKeyPair(
 		p: bigint,
 		q: bigint
@@ -54,13 +50,11 @@ export const RSA: FC<{
 		return { publicKey: [e, n], privateKey: [d, n] };
 	}
 
-	// Функция вычисления наибольшего общего делителя
 	function gcd(a: bigint, b: bigint): bigint {
 		if (!b) return a;
 		return gcd(b, a % b);
 	}
 
-	// Функция вычисления обратного элемента по модулю
 	function modInv(a: bigint, m: bigint): bigint {
 		if (m === BigInt(1)) return BigInt(0);
 
@@ -87,7 +81,6 @@ export const RSA: FC<{
 		return x1;
 	}
 
-	// Функция выработки ЭЦП
 	async function sign(
 		inputFile: string,
 		privateKey: bigint[]
@@ -99,7 +92,6 @@ export const RSA: FC<{
 		return signature;
 	}
 
-	// Функция проверки ЭЦП
 	async function verify(
 		inputFile: string,
 		signature: bigint,
@@ -107,45 +99,42 @@ export const RSA: FC<{
 	): Promise<boolean> {
 		const message = await readFile(inputFile, "utf-8");
 		let messageHash = joaatHash(message);
-		console.log(messageHash);
 		const decryptedSignature = modPow(signature, publicKey[0], publicKey[1]);
 
 		return decryptedSignature === BigInt(messageHash);
 	}
 	async function handleEncrypt() {
-		// Пример использования
 		const p = BigInt("670037");
 		const q = BigInt("670039");
 
-		// Генерация пары ключей
 		const keyPair = generateKeyPair(p, q);
 
 		console.log("Открытый ключ:", keyPair.publicKey);
 		console.log("Закрытый ключ:", keyPair.privateKey);
 
-		// Имя файла с сообщением
 		const inputFile = "input.txt";
 
-		// Выработка ЭЦП для файла с сообщением
 		const signature = await sign(inputFile, keyPair.privateKey);
 
 		console.log("ЭЦП:", signature);
 
-		// Проверка ЭЦП
 		const isValidSignature = await verify(
 			inputFile,
 			signature,
 			keyPair.publicKey
 		);
 		const secondFile = "input2.txt";
-		// Проверка ЭЦП
 		const isValidSignature2 = await verify(
 			secondFile,
 			signature,
 			keyPair.publicKey
 		);
 
-		console.log("Результат проверки ЭЦП:", isValidSignature, isValidSignature2);
+		console.log(
+			"Результат проверки ЭЦП оригинального файла:",
+			isValidSignature
+		);
+		console.log("Результат проверки ЭЦП второго файла:", isValidSignature2);
 		setSelectedItem("");
 		setEncryptedItem("Encrypted");
 	}
