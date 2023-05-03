@@ -9,7 +9,7 @@ export const LSB: FC<{
 }> = ({ setSelectedItem, setEncryptedItem }) => {
 	const [keyString, setKeyString] = useState<string>("");
 
-	async function handleEncrypt() {
+	async function handleEncrypt(keyString: string) {
 		const data = await readFile("input.mp3");
 
 		// Convert message to binary
@@ -28,8 +28,29 @@ export const LSB: FC<{
 
 		// Save output file
 		await writeFile("output.mp3", data);
+		await handleDecrypt(keyString.length);
 		setSelectedItem("");
 		setEncryptedItem("");
+	}
+
+	async function handleDecrypt(messageLength: number): Promise<void> {
+		const data = await readFile("output.mp3");
+
+		// Extract message using LSB method
+		let binaryMessage = "";
+		for (let i = 0; i < messageLength * 8; i += 3) {
+			binaryMessage += (data[Math.floor(i / 3)] & 7)
+				.toString(2)
+				.padStart(3, "0");
+		}
+
+		// Convert binary to string
+		const message = binaryMessage
+			.match(/.{1,8}/g)
+			?.map((binary) => String.fromCharCode(parseInt(binary, 2)))
+			.join("");
+
+		console.log("decrypted: ", message);
 	}
 
 	return (
