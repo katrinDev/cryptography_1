@@ -9,8 +9,12 @@ export const Menu: FC<{ handleSelectMenuItem: (a: string) => void }> = ({
 	};
 	const menuItems = [
 		{
-			label: "ElGamal Encrypt",
-			value: "ElGamal Encrypt",
+			label: "LSB Encrypt",
+			value: "LSB Encrypt",
+		},
+		{
+			label: "RSA Encrypt",
+			value: "RSA Encrypt",
 		},
 	];
 

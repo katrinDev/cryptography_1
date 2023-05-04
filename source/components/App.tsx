@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import { Text } from "ink";
 import { Menu } from "./Menu";
-import { ElGamal } from "./ElGamal";
+import { LSB } from "./LSB";
+import { RSA } from "./RSA";
 
 export const App = () => {
 	const [selectedItem, setSelectedItem] = useState<string>();
 	const [encryptedItem, setEncryptedItem] = useState<string>();
 
 	switch (selectedItem) {
-		case "ElGamal Encrypt":
+		case "LSB Encrypt":
 			return (
-				<ElGamal
+				<LSB
+					setEncryptedItem={setEncryptedItem}
+					setSelectedItem={setSelectedItem}
+				/>
+			);
+		case "RSA Encrypt":
+			return (
+				<RSA
 					setEncryptedItem={setEncryptedItem}
 					setSelectedItem={setSelectedItem}
 				/>
@@ -18,7 +26,7 @@ export const App = () => {
 		default:
 			return (
 				<>
-					<Text>Decrypted item: {encryptedItem}</Text>
+					<Text>{encryptedItem}</Text>
 					<Menu handleSelectMenuItem={setSelectedItem} />
 				</>
 			);
